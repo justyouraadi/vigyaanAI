@@ -36,7 +36,7 @@ const Footer = () => {
             <img 
               src={LOGO_URL} 
               alt="VigyaanKart" 
-              className="h-[100px] w-[100px] mb-4"
+              className="h-[140px] w-[140px] mb-4"
             />
             <p className="text-slate-400 text-sm leading-relaxed mb-4">
               Empowering professionals and entrepreneurs with knowledge-based income blueprints.

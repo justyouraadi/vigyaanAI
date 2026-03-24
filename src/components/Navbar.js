@@ -84,7 +84,7 @@ const Navbar = () => {
               <img 
                 src={LOGO_URL} 
                 alt="VigyaanKart" 
-                className="h-10 w-auto hover:opacity-90 transition-opacity"
+                className="h-12 w-auto hover:opacity-90 transition-opacity"
               />
             </Link>
 

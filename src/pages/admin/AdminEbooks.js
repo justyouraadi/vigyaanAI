@@ -21,12 +21,13 @@ const AdminEbooks = () => {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadedPdf, setUploadedPdf] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const [formData, setFormData] = useState({
     title: '', slug: '', description: '', short_description: '',
     price: '', original_price: '', cover_image: '', pdf_url: '',
     category: '', benefits: '', income_potential: '', target_audience: '',
-    what_you_learn: '', countdown_hours: 24
+    what_you_learn: '', countdown_hours: 24, purchase_link: ''
   });
 
   useEffect(() => { fetchEbooks(); }, []);
@@ -82,6 +83,42 @@ const AdminEbooks = () => {
     }
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+    if (!allowed.some(ext => file.name.toLowerCase().endsWith(ext))) {
+      toast.error('Only JPG, PNG, WebP, GIF images are allowed');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('File too large (max 10MB)');
+      return;
+    }
+    setUploadingImage(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch(`${API_URL}/admin/upload/image`, {
+        method: 'POST',
+        credentials: 'include',
+        body: fd,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setFormData(prev => ({ ...prev, cover_image: `${API_URL}/files/${data.path}` }));
+        toast.success('Cover image uploaded!');
+      } else {
+        const err = await res.json();
+        toast.error(err.detail || 'Image upload failed');
+      }
+    } catch (e) {
+      toast.error('Image upload failed');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -121,7 +158,8 @@ const AdminEbooks = () => {
       cover_image: ebook.cover_image, pdf_url: ebook.pdf_url || '',
       category: ebook.category, benefits: ebook.benefits?.join('\n') || '',
       income_potential: ebook.income_potential, target_audience: ebook.target_audience,
-      what_you_learn: ebook.what_you_learn?.join('\n') || '', countdown_hours: ebook.countdown_hours || 24
+      what_you_learn: ebook.what_you_learn?.join('\n') || '', countdown_hours: ebook.countdown_hours || 24,
+      purchase_link: ebook.purchase_link || ''
     });
     setShowDialog(true);
   };
@@ -143,7 +181,7 @@ const AdminEbooks = () => {
       title: '', slug: '', description: '', short_description: '',
       price: '', original_price: '', cover_image: '', pdf_url: '',
       category: '', benefits: '', income_potential: '', target_audience: '',
-      what_you_learn: '', countdown_hours: 24
+      what_you_learn: '', countdown_hours: 24, purchase_link: ''
     });
   };
 
@@ -188,7 +226,7 @@ const AdminEbooks = () => {
               <div>
                 <Label>Full Description</Label>
                 <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full min-h-[100px] px-3 py-2 border border-slate-200 rounded-lg text-sm" required />
+                  className="w-full min-h-[100px] px-3 py-2 border border-slate-200 rounded-lg text-sm text-black" required />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -206,9 +244,35 @@ const AdminEbooks = () => {
                 </div>
               </div>
 
+              {/* Cover Image Upload */}
               <div>
-                <Label>Cover Image URL</Label>
-                <Input value={formData.cover_image} onChange={(e) => setFormData({ ...formData, cover_image: e.target.value })} required />
+                <Label>Cover Image</Label>
+                <div className="mt-1 border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-[#50C878] transition-colors">
+                  {formData.cover_image ? (
+                    <div className="flex items-center gap-3">
+                      <img src={formData.cover_image} alt="Cover" className="w-16 h-20 object-cover rounded border" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-slate-900">Cover image set</p>
+                        <p className="text-xs text-slate-500">Click replace to change</p>
+                      </div>
+                      <label className="cursor-pointer text-xs text-[#50C878] hover:underline">
+                        Replace
+                        <input type="file" accept=".jpg,.jpeg,.png,.webp,.gif" className="hidden" onChange={handleImageUpload} data-testid="ebook-cover-replace" />
+                      </label>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center gap-2 cursor-pointer">
+                      {uploadingImage ? (
+                        <Loader2 className="w-8 h-8 text-[#50C878] animate-spin" />
+                      ) : (
+                        <Upload className="w-8 h-8 text-slate-400" />
+                      )}
+                      <span className="text-sm text-slate-600">{uploadingImage ? 'Uploading...' : 'Click to upload cover image'}</span>
+                      <span className="text-xs text-slate-400">Max 10MB, JPG/PNG/WebP</span>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.gif" className="hidden" onChange={handleImageUpload} disabled={uploadingImage} data-testid="ebook-cover-upload" />
+                    </label>
+                  )}
+                </div>
               </div>
 
               {/* PDF Upload */}
@@ -256,13 +320,20 @@ const AdminEbooks = () => {
               <div>
                 <Label>Benefits (one per line)</Label>
                 <textarea value={formData.benefits} onChange={(e) => setFormData({ ...formData, benefits: e.target.value })}
-                  className="w-full min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-sm" placeholder="Enter benefits, one per line" />
+                  className="w-full min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-sm text-black" placeholder="Enter benefits, one per line" />
               </div>
 
               <div>
                 <Label>What You'll Learn (one per line)</Label>
                 <textarea value={formData.what_you_learn} onChange={(e) => setFormData({ ...formData, what_you_learn: e.target.value })}
-                  className="w-full min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-sm" placeholder="Enter learning points, one per line" />
+                  className="w-full min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-sm text-black" placeholder="Enter learning points, one per line" />
+              </div>
+
+              <div>
+                <Label>Purchase / Download Link</Label>
+                <Input value={formData.purchase_link} onChange={(e) => setFormData({ ...formData, purchase_link: e.target.value })}
+                  placeholder="e.g., https://razorpay.com/pay/your-link or any external URL" data-testid="ebook-purchase-link-input" />
+                <p className="text-xs text-slate-400 mt-1">Users will be redirected to this link when they click "Download the eBook"</p>
               </div>
 
               <Button type="submit" disabled={saving} className="w-full bg-[#50C878]" data-testid="ebook-save-btn">

@@ -57,15 +57,27 @@ const EbookCard = ({ ebook }) => {
         )}
 
         {/* CTA */}
-        <Link to={`/ebooks/${ebook.slug}`}>
-          <Button 
-            className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
-            data-testid={`download-ebook-${ebook.slug}`}
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Download the Ebook
-          </Button>
-        </Link>
+        {ebook.purchase_link ? (
+          <a href={ebook.purchase_link} target="_blank" rel="noopener noreferrer">
+            <Button 
+              className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
+              data-testid={`download-ebook-${ebook.slug}`}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download the Ebook
+            </Button>
+          </a>
+        ) : (
+          <Link to={`/ebooks/${ebook.slug}`}>
+            <Button 
+              className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
+              data-testid={`download-ebook-${ebook.slug}`}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download the Ebook
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

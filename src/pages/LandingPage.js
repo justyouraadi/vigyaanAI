@@ -25,12 +25,14 @@ const LandingPage = () => {
   const { login } = useAuth();
   const [ebooks, setEbooks] = useState([]);
   const [videoTestimonials, setVideoTestimonials] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [activeVideo, setActiveVideo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchEbooks();
     fetchVideoTestimonials();
+    fetchReviews();
   }, []);
 
   const fetchEbooks = async () => {
@@ -54,6 +56,13 @@ const LandingPage = () => {
     } catch (e) { console.error('Failed to fetch video testimonials:', e); }
   };
 
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch(`${API_URL}/reviews`);
+      if (res.ok) setReviews(await res.json());
+    } catch (e) { console.error('Failed to fetch reviews:', e); }
+  };
+
   const stats = [
     { icon: Users, value: '10,000+', label: 'Students Guided' },
     { icon: BookOpen, value: '5+', label: 'Income Blueprints' },
@@ -61,7 +70,7 @@ const LandingPage = () => {
     { icon: Award, value: '95%', label: 'Success Rate' },
   ];
 
-  const testimonials = [
+  const fallbackTestimonials = [
     {
       name: 'Rahul Sharma',
       role: 'Career Counselor',
@@ -84,6 +93,8 @@ const LandingPage = () => {
       rating: 5
     },
   ];
+
+  const displayTestimonials = reviews.length > 0 ? reviews : fallbackTestimonials;
 
   const faqs = [
     {
@@ -355,8 +366,8 @@ const LandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card" data-testid={`testimonial-${index}`}>
+            {displayTestimonials.map((testimonial, index) => (
+              <div key={testimonial.review_id || index} className="testimonial-card" data-testid={`testimonial-${index}`}>
                 <div className="flex items-center gap-4 mb-4 mt-8">
                   <img 
                     src={testimonial.image}

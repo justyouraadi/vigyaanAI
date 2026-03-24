@@ -39,6 +39,7 @@ import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminEmails from "./pages/admin/AdminEmails";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminAffiliates from "./pages/admin/AdminAffiliates";
+import AdminReviews from "./pages/admin/AdminReviews";
 
 // Router component that handles session_id detection
 function AppRouter() {
@@ -118,6 +119,7 @@ function AppRouter() {
         <Route path="analytics" element={<AdminAnalytics />} />
         <Route path="emails" element={<AdminEmails />} />
         <Route path="blog" element={<AdminBlog />} />
+        <Route path="reviews" element={<AdminReviews />} />
         <Route path="affiliates" element={<AdminAffiliates />} />
       </Route>
       

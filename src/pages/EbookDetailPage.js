@@ -59,6 +59,12 @@ const EbookDetailPage = () => {
   };
 
   const handleBuyNow = async () => {
+    // If purchase_link is set, redirect directly
+    if (ebook.purchase_link) {
+      window.open(ebook.purchase_link, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     if (!user) {
       toast.info('Please sign in to purchase');
       login();

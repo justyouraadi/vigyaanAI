@@ -3,7 +3,7 @@ import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   LayoutDashboard, BookOpen, Users, CreditCard, Tag, 
-  BarChart3, Mail, LogOut, Menu, X, Settings, FileText, Link2
+  BarChart3, Mail, LogOut, Menu, X, Settings, FileText, Link2, Star
 } from 'lucide-react';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_knowledge-income-1/artifacts/cbmw48dd_erasebg-transformed.png";
@@ -28,6 +28,7 @@ const AdminDashboard = () => {
     { name: 'Coupons', href: '/admin/coupons', icon: Tag },
     { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
     { name: 'Blog', href: '/admin/blog', icon: FileText },
+    { name: 'Reviews', href: '/admin/reviews', icon: Star },
     { name: 'Affiliates', href: '/admin/affiliates', icon: Link2 },
     { name: 'Email Logs', href: '/admin/emails', icon: Mail },
   ];
