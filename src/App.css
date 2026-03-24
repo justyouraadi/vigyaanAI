@@ -1,0 +1,199 @@
+/* VigyaanKart Custom Styles */
+
+.hero-gradient {
+    background: radial-gradient(ellipse at top, rgba(80, 200, 120, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(255, 107, 0, 0.2) 0%, transparent 40%),
+                linear-gradient(180deg, #0a1a0f 0%, #0f1a14 100%);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(10, 102, 194, 0.15);
+}
+
+.btn-primary {
+    background: #50C878;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #3CB371;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(80, 200, 120, 0.4);
+}
+
+.btn-cta {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8A3D 100%);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -6px rgba(255, 107, 0, 0.5);
+}
+
+/* Countdown timer styling */
+.countdown-box {
+    background: linear-gradient(135deg, #50C878 0%, #3CB371 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* Stats counter */
+.stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+/* ebook card */
+.ebook-card {
+    background: #0f1a14;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #1e3a2a;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ebook-card:hover {
+    border-color: #50C878;
+    box-shadow: 0 24px 48px -12px rgba(80, 200, 120, 0.3);
+}
+
+.ebook-card:hover .ebook-cover {
+    transform: scale(1.05);
+}
+
+.ebook-cover {
+    transition: transform 0.4s ease;
+}
+
+/* Price tag */
+.price-tag {
+    background: linear-gradient(135deg, #FFC300 0%, #FFD740 100%);
+    color: #0F172A;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.original-price {
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+/* Testimonial card */
+.testimonial-card {
+    background: #0f1a14;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid #1e3a2a;
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    font-size: 60px;
+    font-family: 'Outfit', serif;
+    color: #50C878;
+    opacity: 0.2;
+    line-height: 1;
+}
+
+/* FAQ accordion */
+.faq-item {
+    border: 1px solid #1e3a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    background: #0f1a14;
+}
+
+.faq-item:hover {
+    border-color: #50C878;
+}
+
+/* Government badge */
+.govt-badge {
+    background: linear-gradient(135deg, #50C878 0%, #3CB371 100%);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Dashboard sidebar */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #94a3b8;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: rgba(80, 200, 120, 0.2);
+    color: #6ee7a0;
+}
+
+/* Admin dashboard widgets */
+.widget {
+    background: #0f1a14;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #1e3a2a;
+}
+
+.widget-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navbar */
+.nav-glass {
+    background: rgba(15, 26, 20, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30, 58, 42, 0.8);
+}
+
+/* Footer */
+.footer-gradient {
+    background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+}
+
+/* Loading skeleton */
+.skeleton {
+    background: linear-gradient(90deg, #1e3a2a 25%, #2d4a3a 50%, #1e3a2a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
