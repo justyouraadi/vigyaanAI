@@ -8,6 +8,7 @@ import AuthCallback from "./components/AuthCallback";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AIChatWidget from "./components/AIChatWidget";
 import ExitIntentPopup from "./components/ExitIntentPopup";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 // Pages
 import LandingPage from "./pages/LandingPage";
@@ -171,6 +172,7 @@ function App() {
           <AuthProvider>
             <AppRouter />
             <AIChatWidget />
+            <WhatsAppButton />
             <ExitIntentPopup />
             <Toaster position="top-right" richColors />
           </AuthProvider>

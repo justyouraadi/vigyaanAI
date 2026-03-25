@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Tag, Download } from 'lucide-react';
+import { Tag, ArrowRight } from 'lucide-react';
 
 const EbookCard = ({ ebook }) => {
   const discount = Math.round(((ebook.original_price - ebook.price) / ebook.original_price) * 100);
@@ -56,28 +56,16 @@ const EbookCard = ({ ebook }) => {
           </div>
         )}
 
-        {/* CTA */}
-        {ebook.purchase_link ? (
-          <a href={ebook.purchase_link} target="_blank" rel="noopener noreferrer">
-            <Button 
-              className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
-              data-testid={`download-ebook-${ebook.slug}`}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download the Ebook
-            </Button>
-          </a>
-        ) : (
-          <Link to={`/ebooks/${ebook.slug}`}>
-            <Button 
-              className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
-              data-testid={`download-ebook-${ebook.slug}`}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download the Ebook
-            </Button>
-          </Link>
-        )}
+        {/* CTA - Always go to detail page */}
+        <Link to={`/ebooks/${ebook.slug}`}>
+          <Button 
+            className="w-full bg-[#50C878] hover:bg-[#3CB371] text-white group/btn"
+            data-testid={`view-detail-${ebook.slug}`}
+          >
+            View Details
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

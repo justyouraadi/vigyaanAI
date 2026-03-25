@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_knowledge-income-1/artifacts/cbmw48dd_erasebg-transformed.png";
 
@@ -96,15 +96,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                support@vigyaankart.com
-              </li>
-              <li className="flex items-center gap-3 text-slate-400 text-sm">
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                +91 9876543210
+                support@vigyaanai.in
               </li>
               <li className="flex items-start gap-3 text-slate-400 text-sm">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                Mumbai, Maharashtra, India
+                Jaipur, Rajasthan, India
               </li>
             </ul>
           </div>
