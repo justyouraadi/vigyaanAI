@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
-import { Lock, Mail, Loader2, AlertCircle } from 'lucide-react';
+import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_knowledge-income-1/artifacts/cbmw48dd_erasebg-transformed.png";
@@ -14,6 +14,7 @@ const AdminLogin = () => {
   const { setUser } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -90,14 +91,22 @@ const AdminLogin = () => {
               <div className="relative mt-2">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <Input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-10 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500"
+                  className="pl-10 pr-10 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500"
                   required
                   data-testid="admin-password-input"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                  data-testid="password-toggle-btn"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
             </div>
 

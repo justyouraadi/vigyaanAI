@@ -17,6 +17,25 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Auto-detect session invalidation: periodically check /auth/me
+  // If session was invalidated (e.g. logged in on another device), clear user state
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`${API_URL}/auth/me`, { credentials: 'include' });
+        if (res.status === 401) {
+          setUser(null);
+          // If on admin page, redirect to admin login
+          if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+            window.location.href = '/admin/login';
+          }
+        }
+      } catch (e) { /* network error, ignore */ }
+    }, 30000); // Check every 30 seconds
+    return () => clearInterval(interval);
+  }, [user]);
+
   const checkAuth = useCallback(async () => {
     // CRITICAL: If returning from OAuth callback, skip the /me check.
     // AuthCallback will exchange the session_id and establish the session first.
@@ -90,8 +109,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Authenticated fetch wrapper that handles session invalidation
+  const authFetch = useCallback(async (url, options = {}) => {
+    const res = await fetch(url, { ...options, credentials: 'include' });
+    if (res.status === 401) {
+      setUser(null);
+      if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+        window.location.href = '/admin/login';
+      }
+    }
+    return res;
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, logout, exchangeSession, checkAuth, setUser }}>
+    <AuthContext.Provider value={{ user, loading, error, login, logout, exchangeSession, checkAuth, setUser, authFetch }}>
       {children}
     </AuthContext.Provider>
   );
