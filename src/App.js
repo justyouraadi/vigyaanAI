@@ -171,6 +171,7 @@ function App() {
         <BrowserRouter>
           <AuthProvider>
             <AppRouter />
+            <AIChatWidget />
             <WhatsAppButton />
             <ExitIntentPopup />
             <Toaster position="top-right" richColors />
