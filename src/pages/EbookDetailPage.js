@@ -149,6 +149,13 @@ const EbookDetailPage = () => {
           {/* Left - Image */}
           <div>
             <div className="sticky top-24">
+              {/* Mobile-only: Title banner above image */}
+              <div className="lg:hidden mb-4">
+                <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-xl px-5 py-4" data-testid="mobile-title-banner">
+                  <h1 className="text-xl font-bold text-black">{ebook.title}</h1>
+                </div>
+              </div>
+
               <div className="relative">
                 <img 
                   src={ebook.cover_image}
@@ -166,66 +173,78 @@ const EbookDetailPage = () => {
           </div>
 
           {/* Right - Details */}
-          <div>
-            <Badge className="bg-green-900/50 text-[#6ee7a0] border-0 mb-4">
-              {ebook.category}
-            </Badge>
-            
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4" data-testid="ebook-title">
-              {ebook.title}
-            </h1>
+          <div className="flex flex-col">
+            <div className="hidden lg:block">
+              <Badge className="bg-green-900/50 text-[#6ee7a0] border-0 mb-4">
+                {ebook.category}
+              </Badge>
+              
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4" data-testid="ebook-title">
+                {ebook.title}
+              </h1>
+            </div>
 
-            <p className="text-lg text-slate-400 mb-6">
-              {ebook.description}
-            </p>
+            {/* Mobile: Category badge */}
+            <div className="lg:hidden mb-4">
+              <Badge className="bg-green-900/50 text-[#6ee7a0] border-0">
+                {ebook.category}
+              </Badge>
+            </div>
 
-            {/* Price Card */}
-            <div className="bg-[#0f1a14] rounded-2xl p-6 border border-slate-700 mb-8">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-4xl font-bold text-white">₹{ebook.price.toLocaleString()}</span>
-                {ebook.original_price > ebook.price && (
-                  <span className="text-xl text-slate-500 line-through">₹{ebook.original_price.toLocaleString()}</span>
-                )}
-                {discount > 0 && (
-                  <span className="price-tag">Save {discount}%</span>
-                )}
-              </div>
+            {/* Price Card - appears before description on mobile */}
+            <div className="order-first lg:order-none mb-8">
+              <div className="bg-[#0f1a14] rounded-2xl p-6 border border-slate-700">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-4xl font-bold text-white">₹{ebook.price.toLocaleString()}</span>
+                  {ebook.original_price > ebook.price && (
+                    <span className="text-xl text-slate-500 line-through">₹{ebook.original_price.toLocaleString()}</span>
+                  )}
+                  {discount > 0 && (
+                    <span className="price-tag">Save {discount}%</span>
+                  )}
+                </div>
 
-              {/* Countdown */}
-              <div className="mb-6">
-                <p className="text-sm text-slate-500 mb-2">Offer ends in:</p>
-                <CountdownTimer hours={ebook.countdown_hours || 24} />
-              </div>
+                {/* Countdown */}
+                <div className="mb-6">
+                  <p className="text-sm text-slate-500 mb-2">Offer ends in:</p>
+                  <CountdownTimer hours={ebook.countdown_hours || 24} />
+                </div>
 
-              <Button 
-                onClick={handleBuyNow}
-                disabled={purchasing}
-                className="w-full btn-cta py-6 text-lg rounded-xl"
-                data-testid="buy-now-btn"
-              >
-                {purchasing ? (
-                  <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                ) : (
-                  <Download className="w-5 h-5 mr-2" />
-                )}
-                {purchasing ? 'Processing...' : 'Download the eBook Now'}
-              </Button>
+                <Button 
+                  onClick={handleBuyNow}
+                  disabled={purchasing}
+                  className="w-full btn-cta py-6 text-lg rounded-xl"
+                  data-testid="buy-now-btn"
+                >
+                  {purchasing ? (
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                  ) : (
+                    <Download className="w-5 h-5 mr-2" />
+                  )}
+                  {purchasing ? 'Processing...' : 'Download the eBook Now'}
+                </Button>
 
-              <div className="flex items-center justify-center gap-6 mt-4 text-sm text-slate-500">
-                <span className="flex items-center gap-1">
-                  <Shield className="w-4 h-4" />
-                  Secure Payment
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  Instant Delivery
-                </span>
+                <div className="flex items-center justify-center gap-6 mt-4 text-sm text-slate-500">
+                  <span className="flex items-center gap-1">
+                    <Shield className="w-4 h-4" />
+                    Secure Payment
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    Instant Delivery
+                  </span>
+                </div>
               </div>
             </div>
 
+            {/* Description - after price card on mobile */}
+            <p className="text-lg text-slate-400 mb-6 order-2 lg:order-none">
+              {ebook.description}
+            </p>
+
             {/* Income Potential */}
             {ebook.income_potential && (
-              <div className="bg-emerald-50 rounded-xl p-4 mb-6">
+              <div className="bg-emerald-50 rounded-xl p-4 mb-6 order-3 lg:order-none">
                 <div className="flex items-center gap-3">
                   <Tag className="w-6 h-6 text-emerald-600" />
                   <div>
@@ -238,7 +257,7 @@ const EbookDetailPage = () => {
 
             {/* Target Audience */}
             {ebook.target_audience && (
-              <div className="mb-8">
+              <div className="mb-8 order-4 lg:order-none">
                 <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
                   <Users className="w-5 h-5 text-[#6ee7a0]" />
                   Who is this for?
@@ -249,7 +268,7 @@ const EbookDetailPage = () => {
 
             {/* Benefits */}
             {ebook.benefits && ebook.benefits.length > 0 && (
-              <div className="mb-8">
+              <div className="mb-8 order-5 lg:order-none">
                 <h3 className="text-lg font-semibold text-white mb-4">Key Benefits</h3>
                 <ul className="space-y-3">
                   {ebook.benefits.map((benefit, index) => (
@@ -264,7 +283,7 @@ const EbookDetailPage = () => {
 
             {/* What You'll Learn */}
             {ebook.what_you_learn && ebook.what_you_learn.length > 0 && (
-              <div className="mb-8">
+              <div className="mb-8 order-6 lg:order-none">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-[#6ee7a0]" />
                   What You Will Learn
