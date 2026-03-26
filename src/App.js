@@ -7,7 +7,6 @@ import { LanguageProvider } from "./context/LanguageContext";
 import AuthCallback from "./components/AuthCallback";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AIChatWidget from "./components/AIChatWidget";
-import ExitIntentPopup from "./components/ExitIntentPopup";
 import WhatsAppButton from "./components/WhatsAppButton";
 
 // Pages
@@ -173,7 +172,6 @@ function App() {
             <AppRouter />
             <AIChatWidget />
             <WhatsAppButton />
-            <ExitIntentPopup />
             <Toaster position="top-right" richColors />
           </AuthProvider>
         </BrowserRouter>

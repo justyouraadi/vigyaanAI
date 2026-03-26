@@ -152,7 +152,7 @@ const EbookDetailPage = () => {
               {/* Mobile-only: Title banner above image */}
               <div className="lg:hidden mb-4">
                 <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-xl px-5 py-4" data-testid="mobile-title-banner">
-                  <h1 className="text-xl font-bold text-black">{ebook.title}</h1>
+                  <h1 className="text-base font-bold text-black">{ebook.title}</h1>
                 </div>
               </div>
 
