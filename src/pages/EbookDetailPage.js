@@ -125,19 +125,6 @@ const EbookDetailPage = () => {
     <div className="min-h-screen bg-[#0a1a0f]" data-testid="ebook-detail-page">
       <Navbar />
 
-      {/* Breadcrumb */}
-      <div className="bg-[#0f1a14] border-b border-emerald-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <Link to="/" className="hover:text-[#6ee7a0]">Home</Link>
-            <span>/</span>
-            <Link to="/ebooks" className="hover:text-[#6ee7a0]">Ebooks</Link>
-            <span>/</span>
-            <span className="text-slate-300">{ebook.title}</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link to="/ebooks" className="inline-flex items-center text-[#6ee7a0] hover:underline mb-8">
