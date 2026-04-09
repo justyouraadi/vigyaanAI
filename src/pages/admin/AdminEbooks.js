@@ -333,7 +333,7 @@ const AdminEbooks = () => {
                 <Label>Purchase / Download Link</Label>
                 <Input value={formData.purchase_link} onChange={(e) => setFormData({ ...formData, purchase_link: e.target.value })}
                   placeholder="e.g., https://razorpay.com/pay/your-link or any external URL" data-testid="ebook-purchase-link-input" />
-                <p className="text-xs text-slate-400 mt-1">Users will be redirected to this link when they click "Download the eBook"</p>
+                <p className="text-xs text-slate-400 mt-1">Users will be redirected to this link when they click "Download the Course"</p>
               </div>
 
               <Button type="submit" disabled={saving} className="w-full bg-[#50C878]" data-testid="ebook-save-btn">
